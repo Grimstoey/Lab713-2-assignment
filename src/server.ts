@@ -62,12 +62,24 @@ const books: Books[] = [
 
 app.get("/books", (req, res) => {
   if (req.query.title) {
-    const bookTitle = req.query.title as string
-    const filteredTitle = books.filter((t) => 
-        t.title.toLowerCase().startsWith(bookTitle.toLowerCase()));
+    const bookTitle = req.query.title as string;
+    const filteredTitle = books.filter((t) =>
+      t.title.toLowerCase().startsWith(bookTitle.toLowerCase())
+    );
     res.json(filteredTitle);
   } else {
     res.json(books);
+  }
+});
+
+app.get("/books/:id", (req, res) => {
+  if (req.params.id) {
+    const bookId = req.params.id;
+    const findId = books.find((b) => b.id.toString() === bookId?.toString());
+
+    res.json(findId);
+  } else {
+    res.status(404);
   }
 });
 
