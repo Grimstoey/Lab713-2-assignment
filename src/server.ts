@@ -1,5 +1,6 @@
 import express from "express";
 const app = express();
+app.use(express.json());
 const port = 3000;
 
 interface Books {
@@ -81,6 +82,24 @@ app.get("/books/:id", (req, res) => {
   } else {
     res.status(404);
   }
+});
+
+app.post("/books", (req, res) => {
+  if (req.body.id) {
+    const bookId = req.body.id;
+    const bookById = books.findIndex((b) => b.id === bookId);
+
+    if (bookById !== -1) {
+      books[bookById] = req.body;
+      res.json(books[bookById]);
+      return;
+    }
+  }
+
+  const newBook: Books = req.body;
+  newBook.id = books.length + 1;
+  books.push(newBook);
+  res.json(newBook);
 });
 
 app.listen(port, () => {
