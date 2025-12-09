@@ -1,74 +1,76 @@
-import express from 'express'
+import express from "express";
 const app = express();
 const port = 3000;
 
-
-interface Books{
-    id: number
-    title: string,
-    author_name: string,
-    desciption: string,
-    groups: string
+interface Books {
+  id: number;
+  title: string;
+  author_name: string;
+  desciption: string;
+  groups: string;
 }
 
-
-const books:Books[] =[
-    {
+const books: Books[] = [
+  {
     id: 1,
     title: "The Silent Forest",
     author_name: "Laura Greene",
-    desciption: "A mystery novel set in a quiet town surrounded by ancient woods.",
-    groups: "Mystery"
-},
-{
+    desciption:
+      "A mystery novel set in a quiet town surrounded by ancient woods.",
+    groups: "Mystery",
+  },
+  {
     id: 2,
     title: "Journey Beyond Stars",
     author_name: "Kenji Morita",
-    desciption: "A sci-fi adventure following a crew exploring distant galaxies.",
-    groups: "Science Fiction"
-},
-{
+    desciption:
+      "A sci-fi adventure following a crew exploring distant galaxies.",
+    groups: "Science Fiction",
+  },
+  {
     id: 3,
     title: "Whispers of the Past",
     author_name: "Maria Thompson",
-    desciption: "A historical drama about uncovering long-buried family secrets.",
-    groups: "Historical"
-},
-{
+    desciption:
+      "A historical drama about uncovering long-buried family secrets.",
+    groups: "Historical",
+  },
+  {
     id: 4,
     title: "Cooking with Heart",
     author_name: "Somchai Rattanakorn",
-    desciption: "A cookbook filled with wholesome recipes and stories behind each dish.",
-    groups: "Cooking"
-},
-{
+    desciption:
+      "A cookbook filled with wholesome recipes and stories behind each dish.",
+    groups: "Cooking",
+  },
+  {
     id: 5,
     title: "Mindful Living",
     author_name: "Elena Cruz",
     desciption: "A guide to mindfulness practices for everyday life.",
-    groups: "Self-Help"
-},
-{
+    groups: "Self-Help",
+  },
+  {
     id: 6,
     title: "Legends of the Sapphire Kingdom",
     author_name: "Adrian Blake",
-    desciption: "A fantasy epic about heroes uniting to save their kingdom from darkness.",
-    groups: "Fantasy"
-}
+    desciption:
+      "A fantasy epic about heroes uniting to save their kingdom from darkness.",
+    groups: "Fantasy",
+  },
+];
 
-]
-
-
-
-
-app.get("/all-book", (req, res) => {
+app.get("/books", (req, res) => {
+  if (req.query.title) {
+    const bookTitle = req.query.title as string
+    const filteredTitle = books.filter((t) => 
+        t.title.toLowerCase().startsWith(bookTitle.toLowerCase()));
+    res.json(filteredTitle);
+  } else {
     res.json(books);
-})
-
-
-
-
+  }
+});
 
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`)
-})
+  console.log(`App listening at http://localhost:${port}`);
+});
