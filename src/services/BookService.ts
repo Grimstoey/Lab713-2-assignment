@@ -52,32 +52,32 @@ const books: Book[] = [
   },
 ];
 
-export function getBookByTitle(title: string): Book[] {
+export function getBookByTitle(title: string): Promise<Book[]> {
   const filteredTitle = books.filter((b) =>
     b.title.toLowerCase().startsWith(title.toLowerCase())
   );
-  return filteredTitle;
+  return Promise.resolve(filteredTitle);
 }
 
-export function getAllBooks(): Book[] {
-  return books;
+export function getAllBooks(): Promise<Book[]> {
+  return Promise.resolve(books);
 }
 
-export function getBookById(id: number): Book | undefined {
-  return books.find((b) => b.id === id);
+export function getBookById(id: number): Promise<Book | undefined> {
+  return Promise.resolve(books.find((b) => b.id === id));
 }
 
-export function addBook(newBook: Book): Book {
+export function addBook(newBook: Book): Promise<Book> {
   newBook.id = books.length + 1;
   books.push(newBook);
-  return newBook;
+  return Promise.resolve(newBook);
 }
 
-export function updateBook(reqBook: Book): Book {
-  const books = getAllBooks()
-  const bookId = reqBook.id;
-  const bookIndex = getAllBooks().findIndex((b) => b.id === bookId);
-
-  books[bookIndex] = reqBook;
-  return books[bookIndex];
+export function updateBook(reqBook: Book): Promise<Book | undefined> {
+  return getAllBooks().then(() => {
+    const bookId = reqBook.id;
+    const bookIndex = books.findIndex((b) => b.id === bookId);
+    books[bookIndex] = reqBook;
+    return Promise.resolve(books[bookIndex]);
+  });
 }

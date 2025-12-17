@@ -18,14 +18,10 @@ const port = 3000;
 app.get("/books", (req, res) => {
   if (req.query.title) {
     const bookTitle = req.query.title as string;
-    // const filteredTitle = books.filter((t) =>
-    //   t.title.toLowerCase().startsWith(bookTitle.toLowerCase())
-    // );
 
-    const getBooks = getBookByTitle(bookTitle);
-    res.json(getBooks);
+    getBookByTitle(bookTitle).then((books) => res.json(books));
   } else {
-    res.json(getAllBooks());
+    getAllBooks().then((books) => res.json(books));
   }
 });
 
@@ -36,21 +32,26 @@ app.get("/books/:id", (req, res) => {
   if (!bookId) {
     res.status(404);
   } else {
-    res.json(getBookById(Number(bookId))); //แปลงเลข(string) req.params.id ---> int
+    getBookById(Number(bookId)).then((book) => res.json(book));
+    // res.json(getBookById(Number(bookId))); //แปลงเลข(string) req.params.id ---> int
   }
 });
 
 app.post("/books", (req, res) => {
-  if (req.body) {
+  if (req.body?.id) {
     const bookId = req.body.id;
-    const bookIndex = getAllBooks().findIndex((b) => b.id === bookId);
-    console.log(bookIndex);
+    getAllBooks().then((books) => {
+      const bookIndex = books.findIndex((b) => b.id === bookId);
 
-    if (bookIndex !== -1) {
-      res.json(updateBook(req.body));
-    } else {
-      res.json(addBook(req.body));
-    }
+      if (bookIndex !== -1) {
+        updateBook(req.body).then((book) => res.json(book));
+      } else {
+        console.log(bookIndex);
+        return res.sendStatus(404);
+      }
+    });
+  } else {
+    addBook(req.body).then((book) => res.json(book));
   }
 });
 
