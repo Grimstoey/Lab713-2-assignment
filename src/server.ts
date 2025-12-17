@@ -15,41 +15,41 @@ const port = 3000;
 ///////// book api
 
 // get book by title or get all
-app.get("/books", (req, res) => {
+app.get("/books",async (req, res) => {
   if (req.query.title) {
     const bookTitle = req.query.title as string;
     // const filteredTitle = books.filter((t) =>
     //   t.title.toLowerCase().startsWith(bookTitle.toLowerCase())
     // );
 
-    const getBooks = getBookByTitle(bookTitle);
+    const getBooks = await getBookByTitle(bookTitle);
     res.json(getBooks);
   } else {
-    res.json(getAllBooks());
+    res.json(await getAllBooks());
   }
 });
 
 // get book by id
-app.get("/books/:id", (req, res) => {
+app.get("/books/:id",async (req, res) => {
   const bookId = req.params.id;
 
   if (!bookId) {
     res.status(404);
   } else {
-    res.json(getBookById(Number(bookId))); //แปลงเลข(string) req.params.id ---> int
+    res.json(await getBookById(Number(bookId))); //แปลงเลข(string) req.params.id ---> int
   }
 });
 
-app.post("/books", (req, res) => {
+app.post("/books",async (req, res) => {
   if (req.body) {
     const bookId = req.body.id;
-    const bookIndex = getAllBooks().findIndex((b) => b.id === bookId);
-    console.log(bookIndex);
+    const books = await getAllBooks();
+    const bookIndex = books.findIndex((b) => b.id === bookId);
 
     if (bookIndex !== -1) {
-      res.json(updateBook(req.body));
+      res.json(await updateBook(req.body));
     } else {
-      res.json(addBook(req.body));
+      res.json(await addBook(req.body));
     }
   }
 });

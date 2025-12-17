@@ -52,31 +52,31 @@ const books: Book[] = [
   },
 ];
 
-export function getBookByTitle(title: string): Book[] {
+export async function getBookByTitle(title: string): Promise<Book[]> {
   const filteredTitle = books.filter((b) =>
     b.title.toLowerCase().startsWith(title.toLowerCase())
   );
   return filteredTitle;
 }
 
-export function getAllBooks(): Book[] {
+export async function getAllBooks(): Promise<Book[]> {
   return books;
 }
 
-export function getBookById(id: number): Book | undefined {
+export async function getBookById(id: number): Promise<Book | undefined> {
   return books.find((b) => b.id === id);
 }
 
-export function addBook(newBook: Book): Book {
+export async function addBook(newBook: Book): Promise<Book> {
   newBook.id = books.length + 1;
   books.push(newBook);
   return newBook;
 }
 
-export function updateBook(reqBook: Book): Book {
-  const books = getAllBooks()
+export async function updateBook(reqBook: Book): Promise<Book> {
+  const books = await getAllBooks()
   const bookId = reqBook.id;
-  const bookIndex = getAllBooks().findIndex((b) => b.id === bookId);
+  const bookIndex = books.findIndex((b) => b.id === bookId);
 
   books[bookIndex] = reqBook;
   return books[bookIndex];
