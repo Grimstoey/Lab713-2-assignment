@@ -1,3 +1,5 @@
+// ย้ายไปใช้ไฟล์ BookRepositoryDb แทน
+
 import  type Book from "../models/Book"
 
 
@@ -6,7 +8,7 @@ const books: Book[] = [
     id: 1,
     title: "The Silent Forest",
     author_name: "Laura Greene",
-    desciption:
+    description:
       "A mystery novel set in a quiet town surrounded by ancient woods.",
     groups: "Mystery",
   },
@@ -14,7 +16,7 @@ const books: Book[] = [
     id: 2,
     title: "Journey Beyond Stars",
     author_name: "Kenji Morita",
-    desciption:
+    description:
       "A sci-fi adventure following a crew exploring distant galaxies.",
     groups: "Science Fiction",
   },
@@ -22,7 +24,7 @@ const books: Book[] = [
     id: 3,
     title: "Whispers of the Past",
     author_name: "Maria Thompson",
-    desciption:
+    description:
       "A historical drama about uncovering long-buried family secrets.",
     groups: "Historical",
   },
@@ -30,7 +32,7 @@ const books: Book[] = [
     id: 4,
     title: "Cooking with Heart",
     author_name: "Somchai Rattanakorn",
-    desciption:
+    description:
       "A cookbook filled with wholesome recipes and stories behind each dish.",
     groups: "Cooking",
   },
@@ -38,14 +40,14 @@ const books: Book[] = [
     id: 5,
     title: "Mindful Living",
     author_name: "Elena Cruz",
-    desciption: "A guide to mindfulness practices for everyday life.",
+    description: "A guide to mindfulness practices for everyday life.",
     groups: "Self-Help",
   },
   {
     id: 6,
     title: "Legends of the Sapphire Kingdom",
     author_name: "Adrian Blake",
-    desciption:
+    description:
       "A fantasy epic about heroes uniting to save their kingdom from darkness.",
     groups: "Fantasy",
   },
